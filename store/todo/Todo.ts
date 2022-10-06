@@ -4,11 +4,18 @@ export interface Task {
   done: boolean;
 }
 
-export interface Todos {
+export interface Todo {
+  id: string;
+  description: string;
   tasks: {
     [id: string]: Task;
   };
   allTasks: string[];
 }
 
-export type TodosList = Todos[];
+export interface TodoList {
+  todos: {
+    [id: string]: Todo;
+  };
+  allTodos: string[];
+}
