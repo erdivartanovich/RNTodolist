@@ -6,7 +6,7 @@ export interface TodoState {
   loading: boolean;
   error: boolean | string;
   success: boolean | string;
-  todoList: TodoList | [];
+  todoList: TodoList;
   todo: Todo | null;
 }
 
@@ -14,7 +14,10 @@ export const initialState: TodoState = {
   loading: false,
   error: false,
   success: false,
-  todoList: [],
+  todoList: {
+    todos: {},
+    allTodos: [],
+  },
   todo: null,
 };
 
