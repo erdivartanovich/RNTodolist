@@ -1,17 +1,23 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import TodoInput from "../../components/TodoInput";
+import { RootStackParamList } from "../../Navigation";
 import { useTodo } from "../../store/todo/hooks";
 import TodoEmptyItem from "./TodoEmptyItem";
 import TodoItem from "./TodoListItem";
 
-const AppTodoList = () => {
+type Props = NativeStackScreenProps<RootStackParamList, "TodoList">;
+
+const AppTodoList = ({ navigation }: Props) => {
   const { getTodoList, addTodo, todo, todoList, status } = useTodo();
   useEffect(() => {
     getTodoList();
   }, []);
 
-  useEffect(() => {}, [todo]);
+  useEffect(() => {
+    todo && navigation.navigate("TodoDetail", todo);
+  }, [todo]);
 
   console.log("status now", status);
   console.log("todoList now", todoList);
