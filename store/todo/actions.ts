@@ -7,6 +7,7 @@ import {
 import { Todo, TodoList, initialState } from "./Todo";
 
 const ADD_TODO = "todo/ADD_TODO";
+const SELECT_TODO = "todo/SELECT_TODO";
 const GET_TODO_LIST = "todo/GET_TODO_LIST";
 const GET_TODO = "todo/GET_TODO";
 const SAVE_TODO_LIST = "todo/SAVE_TODO_LIST";
@@ -22,6 +23,8 @@ export const addTodo = createAction(ADD_TODO, (description: string) => {
     },
   };
 });
+
+export const selectTodo = createAction<string | null, string>(SELECT_TODO);
 
 export const getTodoList = createAsyncThunk<TodoList>(
   GET_TODO_LIST,

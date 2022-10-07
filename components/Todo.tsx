@@ -1,20 +1,21 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 interface Props {
   index: number;
   description: string;
+  onPress?: () => void;
 }
 
-const Todo = ({ index, description }: Props) => {
+const Todo = ({ index, description, onPress }: Props) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <View style={styles.indexContainer}>
         <Text style={styles.index}>{index}</Text>
       </View>
       <View style={styles.descriptionContainer}>
         <Text style={styles.description}>{description}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

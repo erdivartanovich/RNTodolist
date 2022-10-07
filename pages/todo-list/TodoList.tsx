@@ -10,24 +10,36 @@ import TodoItem from "./TodoListItem";
 type Props = NativeStackScreenProps<RootStackParamList, "TodoList">;
 
 const AppTodoList = ({ navigation }: Props) => {
-  const { getTodoList, addTodo, todo, todoList, status } = useTodo();
+  const { getTodoList, addTodo, selectTodo, todoList, selectedTodo, status } =
+    useTodo();
+
   useEffect(() => {
     getTodoList();
   }, []);
 
   useEffect(() => {
-    todo && navigation.navigate("TodoDetail", todo);
-  }, [todo]);
+    console.log("todo now", selectedTodo);
+    if (selectedTodo) {
+      navigation.navigate("TodoDetail", selectedTodo);
+    }
+  }, [selectedTodo]);
 
   console.log("status now", status);
   console.log("todoList now", todoList);
-  console.log("todo now", todo);
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>TODO LIST</Text>
       <FlatList
         data={todoList?.allTodos}
-        renderItem={(itemInfo) => TodoItem(itemInfo, todoList)}
+        renderItem={(item) =>
+          TodoItem({
+            item,
+            todoList,
+            onPress: () => {
+              selectTodo(item.item);
+            },
+          })
+        }
         ListEmptyComponent={TodoEmptyItem}
         keyExtractor={(id) => id}
       />

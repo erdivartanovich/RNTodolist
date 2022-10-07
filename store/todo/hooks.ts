@@ -1,7 +1,13 @@
 import { shallowEqual, useSelector } from "react-redux";
 import useActionCreator from "../../hooks/useActionCreator";
 import { RootState } from "../rootReducer";
-import { addTodo, getTodo, getTodoList, saveTodoList } from "./actions";
+import {
+  addTodo,
+  getTodo,
+  getTodoList,
+  saveTodoList,
+  selectTodo,
+} from "./actions";
 import { TodoList, TodoState } from "./Todo";
 
 export interface TodoReturnHook extends TodoState {
@@ -9,6 +15,7 @@ export interface TodoReturnHook extends TodoState {
   getTodo: (id: string) => void;
   saveTodoList: (todoList: TodoList) => void;
   addTodo: (description: string) => void;
+  selectTodo: (id: string | null) => void;
 }
 
 export const useTodo = (): TodoReturnHook => {
@@ -20,5 +27,6 @@ export const useTodo = (): TodoReturnHook => {
     getTodo: useActionCreator(getTodo),
     saveTodoList: useActionCreator(saveTodoList),
     addTodo: useActionCreator(addTodo),
+    selectTodo: useActionCreator(selectTodo),
   };
 };

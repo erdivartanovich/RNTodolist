@@ -24,7 +24,7 @@ export interface TodoState {
   status: "idle" | "loading" | "success" | "failed";
   error: boolean | string;
   todoList: TodoList;
-  todo: Todo | null;
+  selectedTodo: Todo | null;
 }
 
 export const initialState: TodoState = {
@@ -34,5 +34,5 @@ export const initialState: TodoState = {
     todos: {},
     allTodos: [],
   },
-  todo: null,
+  selectedTodo: null,
 };

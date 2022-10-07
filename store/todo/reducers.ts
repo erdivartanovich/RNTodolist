@@ -12,9 +12,13 @@ const todoReducer = createSlice({
   reducers: {
     ADD_TODO: (state, action: PayloadAction<Todo>) => {
       const { payload: todo } = action;
-      state.todo = todo;
+      state.selectedTodo = todo;
       state.todoList.todos[todo.id] = todo;
       state.todoList.allTodos.push(todo.id);
+    },
+    SELECT_TODO: (state, { payload: id }: PayloadAction<string>) => {
+      const todo = state.todoList.todos[id];
+      state.selectedTodo = todo;
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<TodoState>): void => {
@@ -25,7 +29,7 @@ const todoReducer = createSlice({
 
     builder.addCase(getTodo.fulfilled, (state, { payload }) => {
       state.status = "success";
-      state.todo = payload;
+      state.selectedTodo = payload;
     });
 
     builder.addCase(saveTodoList.fulfilled, (state) => {
