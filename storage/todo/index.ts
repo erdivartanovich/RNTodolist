@@ -1,6 +1,6 @@
 import { Todo, TodoList } from "../../store/todo/Todo";
 
-const todoList: TodoList = {
+var todoList: TodoList = {
   todos: {
     td1: {
       id: "td1",
@@ -33,6 +33,5 @@ export const getTodo = async (id: string) => {
 };
 
 export const saveTodo = async (data: Todo) => {
-  todoList.todos[data.id] = data;
   return Promise.resolve(data);
 };

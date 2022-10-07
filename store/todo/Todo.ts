@@ -13,9 +13,9 @@ export interface Todo {
   allTasks: string[];
 }
 
-export interface TodoList {
+export type TodoList = {
   todos: {
     [id: string]: Todo;
   };
   allTodos: string[];
-}
+};

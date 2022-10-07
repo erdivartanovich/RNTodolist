@@ -9,14 +9,13 @@ import {
   setSuccess,
 } from "./actions";
 import { TodoState } from "./reducers";
-import { Todo } from "./Todo";
 
 export interface TodoReturnHook extends TodoState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getTodoList: () => void;
   getTodo: (id: string) => void;
-  saveTodo: (data: Todo) => void;
+  saveTodo: (description: string) => void;
 }
 
 export const useTodo = (): TodoReturnHook => {

@@ -18,20 +18,27 @@ export const setSuccess = createAction<string | boolean>(SET_SUCCESS);
 export const getTodoList = createAsyncThunk<TodoList>(
   GET_TODO_LIST,
   async () => {
-    return storageGetTodoList();
+    return await storageGetTodoList();
   }
 );
 
 export const getTodo = createAsyncThunk<Todo, string>(
   GET_TODO,
   async (id: string) => {
-    return storageGetTodo(id);
+    return await storageGetTodo(id);
   }
 );
 
-export const saveTodo = createAsyncThunk<Todo, Todo>(
+export const saveTodo = createAsyncThunk<Todo, string>(
   SAVE_TODO,
-  async (data) => {
-    return storageSaveTodo(data);
+  async (description) => {
+    const todo: Todo = {
+      description,
+      id: description,
+      tasks: {},
+      allTasks: [],
+    };
+    console.log("new todo is", todo);
+    return await storageSaveTodo(todo);
   }
 );

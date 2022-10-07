@@ -1,23 +1,56 @@
-import { Todo as TodoInterface } from "../store/todo/Todo";
 import { View, Text, StyleSheet } from "react-native";
 
-const Todo = ({ description }: Partial<TodoInterface>) => {
+interface Props {
+  index: number;
+  description: string;
+}
+
+const Todo = ({ index, description }: Props) => {
+  console.log("description", description);
   return (
-    <View style={styles.item}>
-      <Text style={styles.description}>{description}</Text>
+    <View style={styles.container}>
+      <View style={styles.indexContainer}>
+        <Text style={styles.index}>{index}</Text>
+      </View>
+      <View style={styles.descriptionContainer}>
+        <Text style={styles.description}>{description}</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+  container: {
+    flexDirection: "row",
+    marginHorizontal: 10,
+  },
+  indexContainer: {
+    backgroundColor: "#FDB87C",
+    marginRight: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 50,
+    height: 50,
+  },
+  index: {
+    color: "#653002",
+    fontSize: 16,
+  },
+  descriptionContainer: {
+    backgroundColor: "#FDB87C",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    minHeight: 50,
+    marginRight: 20,
   },
   description: {
-    fontSize: 32,
+    color: "#653002",
+    textAlign: "center",
+    width: "90%",
+    fontSize: 16,
   },
 });
+
 export default Todo;
