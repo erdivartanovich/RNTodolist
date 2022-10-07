@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { FlatList, StatusBar, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import TodoInput from "../../components/TodoInput";
 import { useTodo } from "../../store/todo/hooks";
 import TodoEmptyItem from "./TodoEmptyItem";
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FF7700",
-    marginTop: StatusBar.currentHeight || 0,
   },
   heading: {
     color: "#fff",

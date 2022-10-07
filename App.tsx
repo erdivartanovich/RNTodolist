@@ -1,25 +1,24 @@
-import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, View } from "react-native";
 import { Provider } from "react-redux";
 import TodoList from "./pages/todo-list/TodoList";
 import { store } from "./store";
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <Provider store={store}>
-      <View style={styles.container}>
-        <StatusBar style="auto" />
-        <TodoList />
-      </View>
-    </Provider>
+    <NavigationContainer>
+      <Provider store={store}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="TodoList"
+            component={TodoList}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </Provider>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
