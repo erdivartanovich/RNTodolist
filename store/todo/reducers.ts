@@ -1,25 +1,21 @@
-import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
 import {
-  getTodo,
-  getTodoList,
-  saveTodo,
-  setError,
-  setSuccess,
-} from "./actions";
-import { TodoList, Todo } from "./Todo";
+  ActionReducerMapBuilder,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
+import { getTodo, getTodoList, saveTodoList } from "./actions";
+import { Todo, TodoList } from "./Todo";
 
 export interface TodoState {
-  loading: boolean;
+  status: "idle" | "loading" | "success" | "failed";
   error: boolean | string;
-  success: boolean | string;
   todoList: TodoList;
   todo: Todo | null;
 }
 
 export const initialState: TodoState = {
-  loading: false,
+  status: "idle",
   error: false,
-  success: false,
   todoList: {
     todos: {},
     allTodos: [],
@@ -30,36 +26,27 @@ export const initialState: TodoState = {
 const todoReducer = createSlice({
   name: "todo",
   initialState,
-  reducers: {},
+  reducers: {
+    ADD_TODO: (state, action: PayloadAction<Todo>) => {
+      const { payload: todo } = action;
+      state.todo = todo;
+      state.todoList.todos[todo.id] = todo;
+      state.todoList.allTodos.push(todo.id);
+    },
+  },
   extraReducers: (builder: ActionReducerMapBuilder<TodoState>): void => {
-    builder.addCase(setError, (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    });
-
-    builder.addCase(setSuccess, (state, { payload }) => {
-      state.loading = false;
-      state.success = payload;
-    });
-
     builder.addCase(getTodoList.fulfilled, (state, { payload }) => {
-      state.loading = false;
+      state.status = "success";
       state.todoList = payload;
-      state.success = true;
     });
 
     builder.addCase(getTodo.fulfilled, (state, { payload }) => {
-      state.loading = false;
+      state.status = "success";
       state.todo = payload;
-      state.success = true;
     });
 
-    builder.addCase(saveTodo.fulfilled, (state, { payload }) => {
-      state.loading = false;
-      state.todo = payload;
-      state.todoList.todos[payload.id] = payload;
-      state.todoList.allTodos.push(payload.id);
-      state.success = true;
+    builder.addCase(saveTodoList.fulfilled, (state) => {
+      state.status = "success";
     });
   },
 });

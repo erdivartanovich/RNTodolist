@@ -10,14 +10,14 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = {
-  saveTodo: (description: string) => void;
+  addTodo: (description: string) => void;
 };
 
 const TodoInput = (props: Props) => {
   const [todo, setTodo] = useState<string | null>();
 
   const handleAddTodo = (description: string) => {
-    props.saveTodo(description);
+    props.addTodo(description);
     setTodo(null);
   };
 
@@ -30,8 +30,8 @@ const TodoInput = (props: Props) => {
         style={styles.inputField}
         value={todo!}
         onChangeText={(text) => setTodo(text)}
-        placeholder={"Create new todo"}
-        placeholderTextColor={"#653002"}
+        placeholder={"Add new todo"}
+        placeholderTextColor={"#916B4A"}
       />
       <TouchableOpacity onPress={() => handleAddTodo(todo!)}>
         <View style={styles.button}>
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
   inputField: {
+    color: "#653002",
     height: 50,
     flex: 1,
   },
