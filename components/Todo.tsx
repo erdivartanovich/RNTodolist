@@ -6,7 +6,6 @@ interface Props {
 }
 
 const Todo = ({ index, description }: Props) => {
-  console.log("description", description);
   return (
     <View style={styles.container}>
       <View style={styles.indexContainer}>

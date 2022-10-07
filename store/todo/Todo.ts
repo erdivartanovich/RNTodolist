@@ -19,3 +19,20 @@ export type TodoList = {
   };
   allTodos: string[];
 };
+
+export interface TodoState {
+  status: "idle" | "loading" | "success" | "failed";
+  error: boolean | string;
+  todoList: TodoList;
+  todo: Todo | null;
+}
+
+export const initialState: TodoState = {
+  status: "idle",
+  error: false,
+  todoList: {
+    todos: {},
+    allTodos: [],
+  },
+  todo: null,
+};

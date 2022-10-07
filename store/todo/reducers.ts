@@ -4,24 +4,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { getTodo, getTodoList, saveTodoList } from "./actions";
-import { Todo, TodoList } from "./Todo";
-
-export interface TodoState {
-  status: "idle" | "loading" | "success" | "failed";
-  error: boolean | string;
-  todoList: TodoList;
-  todo: Todo | null;
-}
-
-export const initialState: TodoState = {
-  status: "idle",
-  error: false,
-  todoList: {
-    todos: {},
-    allTodos: [],
-  },
-  todo: null,
-};
+import { Todo, TodoState, initialState } from "./Todo";
 
 const todoReducer = createSlice({
   name: "todo",

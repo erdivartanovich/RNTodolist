@@ -6,13 +6,16 @@ import TodoEmptyItem from "./TodoEmptyItem";
 import TodoItem from "./TodoListItem";
 
 const AppTodoList = () => {
-  const { getTodoList, addTodo, todoList, status } = useTodo();
+  const { getTodoList, addTodo, todo, todoList, status } = useTodo();
   useEffect(() => {
     getTodoList();
   }, []);
 
+  useEffect(() => {}, [todo]);
+
   console.log("status now", status);
   console.log("todoList now", todoList);
+  console.log("todo now", todo);
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>TODO LIST</Text>

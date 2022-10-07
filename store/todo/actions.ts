@@ -4,8 +4,7 @@ import {
   getTodoList as storageGetTodoList,
   saveTodoList as storageSaveTodoList,
 } from "../../storage/todo";
-import { initialState } from "./reducers";
-import { Todo, TodoList } from "./Todo";
+import { Todo, TodoList, initialState } from "./Todo";
 
 const ADD_TODO = "todo/ADD_TODO";
 const GET_TODO_LIST = "todo/GET_TODO_LIST";
