@@ -1,18 +1,12 @@
-import { ListRenderItemInfo } from "react-native";
 import Todo from "../../components/Todo";
-import { TodoList } from "../../store/todo/Todo";
+import { Todo as TodoInterface } from "../../store/todo/Todo";
 
 const TodoItem = (params: {
-  item: Partial<ListRenderItemInfo<string>>;
-  todoList: TodoList;
+  index: number;
+  todo: TodoInterface;
   onPress: () => void;
 }) => {
-  const {
-    item: { item: id, index },
-    todoList,
-    onPress,
-  } = params;
-  const todo = todoList?.todos[id!];
+  const { index, todo, onPress } = params;
   return (
     <Todo
       description={todo?.description}

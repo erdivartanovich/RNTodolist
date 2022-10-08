@@ -10,14 +10,14 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = {
-  addTodo: (description: string) => void;
+  addItem: (description: string) => void;
 };
 
-const TodoInput = (props: Props) => {
+const ItemInput = (props: Props) => {
   const [todo, setTodo] = useState<string | null>();
 
   const handleAddTodo = (description: string) => {
-    props.addTodo(description);
+    props.addItem(description);
     setTodo(null);
   };
 
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TodoInput;
+export default ItemInput;

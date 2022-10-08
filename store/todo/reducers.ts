@@ -3,7 +3,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { getTodo, getTodoList, saveTodoList } from "./actions";
+import { getTodoList, saveTodo } from "./actions";
 import { Todo, TodoState, initialState } from "./Todo";
 
 const todoReducer = createSlice({
@@ -13,11 +13,9 @@ const todoReducer = createSlice({
     ADD_TODO: (state, action: PayloadAction<Todo>) => {
       const { payload: todo } = action;
       state.selectedTodo = todo;
-      state.todoList.todos[todo.id] = todo;
-      state.todoList.allTodos.push(todo.id);
+      state.todoList.push(todo);
     },
-    SELECT_TODO: (state, { payload: id }: PayloadAction<string>) => {
-      const todo = state.todoList.todos[id];
+    SELECT_TODO: (state, { payload: todo }: PayloadAction<Todo>) => {
       state.selectedTodo = todo;
     },
   },
@@ -27,12 +25,7 @@ const todoReducer = createSlice({
       state.todoList = payload;
     });
 
-    builder.addCase(getTodo.fulfilled, (state, { payload }) => {
-      state.status = "success";
-      state.selectedTodo = payload;
-    });
-
-    builder.addCase(saveTodoList.fulfilled, (state) => {
+    builder.addCase(saveTodo.fulfilled, (state) => {
       state.status = "success";
     });
   },

@@ -1,26 +1,33 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import TodoInput from "../../components/TodoInput";
+import EmptyItem from "../../components/EmptyItem";
+import ItemInput from "../../components/ItemInput";
 import { RootStackParamList } from "../../Navigation";
 import { useTodo } from "../../store/todo/hooks";
-import TodoEmptyItem from "./TodoEmptyItem";
 import TodoItem from "./TodoListItem";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TodoList">;
 
 const AppTodoList = ({ navigation }: Props) => {
-  const { getTodoList, addTodo, selectTodo, todoList, selectedTodo, status } =
-    useTodo();
+  const {
+    getTodoList,
+    addTodo,
+    saveTodo,
+    selectTodo,
+    todoList,
+    selectedTodo,
+    status,
+  } = useTodo();
 
   useEffect(() => {
     getTodoList();
-  }, []);
+  }, [selectedTodo]);
 
   useEffect(() => {
     console.log("todo now", selectedTodo);
     if (selectedTodo) {
-      navigation.navigate("TodoDetail", selectedTodo);
+      navigation.navigate("TodoDetail", { title: "Manage Todo" });
     }
   }, [selectedTodo]);
 
@@ -30,20 +37,22 @@ const AppTodoList = ({ navigation }: Props) => {
     <View style={styles.container}>
       <Text style={styles.heading}>TODO LIST</Text>
       <FlatList
-        data={todoList?.allTodos}
-        renderItem={(item) =>
+        data={todoList}
+        renderItem={({ item: todo, index }) =>
           TodoItem({
-            item,
-            todoList,
+            index,
+            todo,
             onPress: () => {
-              selectTodo(item.item);
+              selectTodo(todo);
             },
           })
         }
-        ListEmptyComponent={TodoEmptyItem}
-        keyExtractor={(id) => id}
+        ListEmptyComponent={
+          <EmptyItem description="Your todos still empty, add one!" />
+        }
+        keyExtractor={(todo) => todo.id}
       />
-      <TodoInput addTodo={addTodo} />
+      <ItemInput addItem={addTodo} />
     </View>
   );
 };

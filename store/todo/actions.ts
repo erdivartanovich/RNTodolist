@@ -1,16 +1,14 @@
 import { createAction, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import {
-  getTodo as storageGetTodo,
   getTodoList as storageGetTodoList,
-  saveTodoList as storageSaveTodoList,
+  saveTodo as storageSaveTodo,
 } from "../../storage/todo";
-import { Todo, TodoList, initialState } from "./Todo";
+import { initialState, Todo, TodoList } from "./Todo";
 
 const ADD_TODO = "todo/ADD_TODO";
 const SELECT_TODO = "todo/SELECT_TODO";
 const GET_TODO_LIST = "todo/GET_TODO_LIST";
-const GET_TODO = "todo/GET_TODO";
-const SAVE_TODO_LIST = "todo/SAVE_TODO_LIST";
+const SAVE_TODO = "todo/SAVE_TODO";
 
 export const addTodo = createAction(ADD_TODO, (description: string) => {
   const id = nanoid();
@@ -18,13 +16,12 @@ export const addTodo = createAction(ADD_TODO, (description: string) => {
     payload: <Todo>{
       id,
       description,
-      tasks: {},
-      allTasks: [],
+      tasks: [],
     },
   };
 });
 
-export const selectTodo = createAction<string | null, string>(SELECT_TODO);
+export const selectTodo = createAction<Todo | null>(SELECT_TODO);
 
 export const getTodoList = createAsyncThunk<TodoList>(
   GET_TODO_LIST,
@@ -34,17 +31,10 @@ export const getTodoList = createAsyncThunk<TodoList>(
   }
 );
 
-export const getTodo = createAsyncThunk<Todo, string>(
-  GET_TODO,
-  async (id: string) => {
-    return await storageGetTodo(id);
-  }
-);
-
-export const saveTodoList = createAsyncThunk<TodoList, TodoList>(
-  SAVE_TODO_LIST,
-  async (todoList: TodoList) => {
-    console.log("saving todoList is", todoList);
-    return await storageSaveTodoList(todoList);
+export const saveTodo = createAsyncThunk<Todo, Todo>(
+  SAVE_TODO,
+  async (todo: Todo) => {
+    console.log("saving todoList is", todo);
+    return await storageSaveTodo(todo);
   }
 );

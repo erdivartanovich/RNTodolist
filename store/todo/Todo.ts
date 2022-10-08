@@ -7,32 +7,21 @@ export interface Task {
 export interface Todo {
   id: string;
   description: string;
-  tasks: {
-    [id: string]: Task;
-  };
-  allTasks: string[];
+  tasks: Task[];
 }
 
-export type TodoList = {
-  todos: {
-    [id: string]: Todo;
-  };
-  allTodos: string[];
-};
+export type TodoList = Todo[];
 
 export interface TodoState {
   status: "idle" | "loading" | "success" | "failed";
   error: boolean | string;
   todoList: TodoList;
-  selectedTodo: Todo | null;
+  selectedTodo: Todo | undefined;
 }
 
 export const initialState: TodoState = {
   status: "idle",
   error: false,
-  todoList: {
-    todos: {},
-    allTodos: [],
-  },
-  selectedTodo: null,
+  todoList: [],
+  selectedTodo: undefined,
 };

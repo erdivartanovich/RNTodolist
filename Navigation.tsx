@@ -1,12 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TodoDetail from "./pages/todo-detail/todo-detail";
+import TodoDetail from "./pages/todo-detail/TodoDetail";
 import TodoList from "./pages/todo-list/TodoList";
-import { Todo } from "./store/todo/Todo";
 
 export type RootStackParamList = {
   TodoList: undefined;
-  TodoDetail: Todo;
+  TodoDetail: {
+    title: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -22,7 +23,7 @@ export const Navigation = () => (
       <Stack.Screen
         name="TodoDetail"
         component={TodoDetail}
-        options={({ route }) => ({ title: route.params.description })}
+        options={({ route }) => ({ title: route.params.title })}
       />
     </Stack.Navigator>
   </NavigationContainer>
