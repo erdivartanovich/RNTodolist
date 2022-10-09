@@ -25,9 +25,7 @@ const AppTask = ({ index, task, onUpdateTask }: Props) => {
         onPress={() => setIsDone(!isDone)}
         style={styles.indexContainer}
       >
-        <View style={styles.button}>
-          {isDone ? <DoneIcon /> : <NotDoneIcon />}
-        </View>
+        {isDone ? <DoneIcon /> : <NotDoneIcon />}
       </TouchableOpacity>
       <View style={styles.descriptionContainer}>
         <Text
@@ -77,16 +75,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   idDoneDescription: {
+    color: "#917256",
     textDecorationLine: "line-through",
     textDecorationStyle: "solid",
-  },
-  button: {
-    height: 30,
-    width: 30,
-    borderRadius: 5,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 
