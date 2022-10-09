@@ -8,12 +8,19 @@ type Props = {
   task: Task;
   onUpdateStatus: (index: number, isDone: boolean) => void;
   onSelect: (index: number) => void;
+  onDelete: () => void;
 };
 
 const DoneIcon = () => <Feather name="check-square" size={24} color="black" />;
 const NotDoneIcon = () => <Feather name="square" size={24} color="black" />;
 
-const AppTask = ({ index, task, onUpdateStatus, onSelect }: Props) => {
+const AppTask = ({
+  index,
+  task,
+  onUpdateStatus,
+  onSelect,
+  onDelete,
+}: Props) => {
   const [isDone, setIsDone] = useState(task.done);
 
   useEffect(() => {
@@ -42,7 +49,7 @@ const AppTask = ({ index, task, onUpdateStatus, onSelect }: Props) => {
           {task.task}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+      <TouchableOpacity onPress={onDelete} style={styles.buttonContainer}>
         <MaterialIcons name="delete" size={24} color="black" />
       </TouchableOpacity>
     </View>

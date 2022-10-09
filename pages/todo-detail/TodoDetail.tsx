@@ -47,6 +47,12 @@ const TodoDetail = ({ navigation }: Props) => {
     setTaskList(newTaskList);
   };
 
+  const deleteTask = (index: number) => {
+    const newTaskList = [...taskList];
+    newTaskList.splice(index, 1);
+    setTaskList(newTaskList);
+  };
+
   useEffect(() => {
     setSelectedTaskDescription(
       selectedIndex > 0 ? taskList[selectedIndex].task : undefined
@@ -89,6 +95,7 @@ const TodoDetail = ({ navigation }: Props) => {
               inputRef.current?.focus();
             }}
             onUpdateStatus={updateStatus}
+            onDelete={() => deleteTask(index)}
           />
         )}
         ItemSeparatorComponent={() => <Separator />}
