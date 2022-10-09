@@ -32,3 +32,11 @@ export const saveTodo = async (data: Todo) => {
     throw e;
   }
 };
+
+export const deleteTodo = async (id: string) => {
+  try {
+    await AsyncStorage.removeItem(id);
+  } catch (e) {
+    throw e;
+  }
+};

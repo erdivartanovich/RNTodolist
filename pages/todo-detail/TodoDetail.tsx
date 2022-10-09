@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import EmptyItem from "../../components/EmptyItem";
 import ItemInput from "../../components/ItemInput";
+import Separator from "../../components/Separator";
 import AppTask from "../../components/Task";
 import { RootStackParamList } from "../../Navigation";
 import { useTodo } from "../../store/todo/hooks";
@@ -90,6 +91,7 @@ const TodoDetail = ({ navigation }: Props) => {
             onUpdateStatus={updateStatus}
           />
         )}
+        ItemSeparatorComponent={() => <Separator />}
         ListEmptyComponent={
           <EmptyItem description={"No task yet, create one!"} />
         }
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     color: "#fff",
-    textAlign: "center",
+    textAlign: "left",
     fontSize: 20,
     fontWeight: "600",
     marginTop: 30,

@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
   index: number;
@@ -8,14 +9,17 @@ interface Props {
 
 const Todo = ({ index, description, onPress }: Props) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.indexContainer}>
         <Text style={styles.index}>{index}</Text>
       </View>
-      <View style={styles.descriptionContainer}>
+      <TouchableOpacity onPress={onPress} style={styles.descriptionContainer}>
         <Text style={styles.description}>{description}</Text>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+        <MaterialIcons name="delete" size={24} color="black" />
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
     marginRight: 2,
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
+    width: 40,
     height: 50,
   },
   index: {
@@ -43,13 +47,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     minHeight: 50,
-    marginRight: 20,
+    marginRight: 2,
   },
   description: {
     color: "#653002",
     textAlign: "center",
-    width: "90%",
+    width: "75%",
     fontSize: 16,
+  },
+  buttonContainer: {
+    backgroundColor: "#FDB87C",
+    marginRight: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 40,
+    height: 50,
   },
 });
 

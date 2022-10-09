@@ -1,4 +1,4 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Task } from "../store/todo/Todo";
@@ -42,6 +42,9 @@ const AppTask = ({ index, task, onUpdateStatus, onSelect }: Props) => {
           {task.task}
         </Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+        <MaterialIcons name="delete" size={24} color="black" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
     marginRight: 2,
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
+    width: 40,
     height: 50,
   },
   index: {
@@ -70,18 +73,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     minHeight: 50,
-    marginRight: 20,
+    marginRight: 2,
   },
   description: {
     color: "#653002",
     textAlign: "center",
-    width: "90%",
+    width: "75%",
     fontSize: 16,
   },
   idDoneDescription: {
     color: "#917256",
     textDecorationLine: "line-through",
     textDecorationStyle: "solid",
+  },
+  buttonContainer: {
+    backgroundColor: "#FDB87C",
+    marginRight: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 40,
+    height: 50,
   },
 });
 

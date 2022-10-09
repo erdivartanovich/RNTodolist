@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import EmptyItem from "../../components/EmptyItem";
 import ItemInput from "../../components/ItemInput";
+import Separator from "../../components/Separator";
 import { RootStackParamList } from "../../Navigation";
 import { useTodo } from "../../store/todo/hooks";
 import TodoItem from "./TodoListItem";
@@ -37,6 +38,7 @@ const AppTodoList = ({ navigation }: Props) => {
             },
           })
         }
+        ItemSeparatorComponent={() => <Separator />}
         ListEmptyComponent={
           <EmptyItem description="Your todos still empty, add one!" />
         }
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     color: "#fff",
-    textAlign: "center",
+    textAlign: "left",
     fontSize: 20,
     fontWeight: "600",
     marginTop: 30,

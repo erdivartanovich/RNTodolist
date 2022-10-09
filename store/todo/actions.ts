@@ -2,6 +2,7 @@ import { createAction, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import {
   getTodoList as storageGetTodoList,
   saveTodo as storageSaveTodo,
+  deleteTodo as storageDeleteTodo,
 } from "../../storage/todo";
 import { initialState, Todo, TodoList } from "./Todo";
 
@@ -9,6 +10,7 @@ const ADD_TODO = "todo/ADD_TODO";
 const SELECT_TODO = "todo/SELECT_TODO";
 const GET_TODO_LIST = "todo/GET_TODO_LIST";
 const SAVE_TODO = "todo/SAVE_TODO";
+const DELETE_TODO = "todo/DELETE_TODO";
 
 export const addTodo = createAction(ADD_TODO, (description: string) => {
   const id = nanoid();
@@ -36,5 +38,13 @@ export const saveTodo = createAsyncThunk<Todo, Todo>(
   async (todo: Todo) => {
     console.log("saving todoList is", todo);
     return await storageSaveTodo(todo);
+  }
+);
+
+export const deleteTodo = createAsyncThunk<void, string>(
+  DELETE_TODO,
+  async (id: string) => {
+    console.log("deleting todoList with id", id);
+    return await storageDeleteTodo(id);
   }
 );

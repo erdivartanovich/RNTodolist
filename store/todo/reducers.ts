@@ -1,9 +1,10 @@
 import {
   ActionReducerMapBuilder,
   createSlice,
+  isAnyOf,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { getTodoList, saveTodo } from "./actions";
+import { getTodoList, saveTodo, deleteTodo } from "./actions";
 import { Todo, TodoState, initialState } from "./Todo";
 
 const todoReducer = createSlice({
@@ -25,9 +26,12 @@ const todoReducer = createSlice({
       state.todoList = payload;
     });
 
-    builder.addCase(saveTodo.fulfilled, (state) => {
-      state.status = "success";
-    });
+    builder.addMatcher(
+      isAnyOf(saveTodo.fulfilled, deleteTodo.fulfilled),
+      (state) => {
+        state.status = "success";
+      }
+    );
   },
 });
 
