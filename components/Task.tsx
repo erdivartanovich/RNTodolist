@@ -6,17 +6,18 @@ import { Task } from "../store/todo/Todo";
 type Props = {
   index: number;
   task: Task;
-  onUpdateTask: (index: number, task: Task) => void;
+  onUpdateStatus: (index: number, isDone: boolean) => void;
+  onSelect: (index: number) => void;
 };
 
 const DoneIcon = () => <Feather name="check-square" size={24} color="black" />;
 const NotDoneIcon = () => <Feather name="square" size={24} color="black" />;
 
-const AppTask = ({ index, task, onUpdateTask }: Props) => {
+const AppTask = ({ index, task, onUpdateStatus, onSelect }: Props) => {
   const [isDone, setIsDone] = useState(task.done);
 
   useEffect(() => {
-    onUpdateTask(index, { ...task, done: isDone });
+    onUpdateStatus(index, isDone);
   }, [isDone]);
 
   return (
@@ -27,7 +28,10 @@ const AppTask = ({ index, task, onUpdateTask }: Props) => {
       >
         {isDone ? <DoneIcon /> : <NotDoneIcon />}
       </TouchableOpacity>
-      <View style={styles.descriptionContainer}>
+      <TouchableOpacity
+        onPress={() => onSelect(index)}
+        style={styles.descriptionContainer}
+      >
         <Text
           style={
             isDone
@@ -37,7 +41,7 @@ const AppTask = ({ index, task, onUpdateTask }: Props) => {
         >
           {task.task}
         </Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

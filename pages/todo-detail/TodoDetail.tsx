@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { nanoid } from "@reduxjs/toolkit";
-import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import EmptyItem from "../../components/EmptyItem";
 import ItemInput from "../../components/ItemInput";
 import AppTask from "../../components/Task";
@@ -13,9 +13,14 @@ type Props = NativeStackScreenProps<RootStackParamList, "TodoDetail">;
 
 const TodoDetail = ({ navigation }: Props) => {
   const { selectTodo, selectedTodo, saveTodo } = useTodo();
-  const { id: todoId, description, tasks } = selectedTodo!;
+  const { description, tasks } = selectedTodo || { description: "", tasks: [] };
 
   const [taskList, setTaskList] = useState(tasks);
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [selectedTaskDescription, setSelectedTaskDescription] = useState<
+    string | undefined
+  >();
+  const inputRef = React.createRef<TextInput>();
 
   const addTask = (description: string) => {
     const newTask: Task = {
@@ -26,11 +31,38 @@ const TodoDetail = ({ navigation }: Props) => {
     setTaskList([...taskList, newTask]);
   };
 
-  const updateTask = (index: number, task: Task) => {
+  const updateTask = (index: number, description: string) => {
     const newTaskList = [...taskList];
-    newTaskList[index] = task;
+    newTaskList[index] = {
+      ...newTaskList[index],
+      task: description,
+    };
     setTaskList(newTaskList);
   };
+
+  const updateStatus = (index: number, isDone: boolean) => {
+    const newTaskList = [...taskList];
+    newTaskList[index] = { ...newTaskList[index], done: isDone };
+    setTaskList(newTaskList);
+  };
+
+  useEffect(() => {
+    setSelectedTaskDescription(
+      selectedIndex > 0 ? taskList[selectedIndex].task : undefined
+    );
+  }, [selectedIndex]);
+
+  const addOrUpdateTask = useCallback(
+    (description: string) => {
+      if (selectedIndex < 0) {
+        addTask(description);
+      } else {
+        updateTask(selectedIndex, description);
+      }
+      setSelectedIndex(-1);
+    },
+    [selectedIndex]
+  );
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("beforeRemove", () => {
@@ -48,14 +80,26 @@ const TodoDetail = ({ navigation }: Props) => {
       <FlatList
         data={taskList}
         renderItem={({ item: task, index }) => (
-          <AppTask index={index} task={task} onUpdateTask={updateTask} />
+          <AppTask
+            index={index}
+            task={task}
+            onSelect={(index) => {
+              setSelectedIndex(index);
+              inputRef.current?.focus();
+            }}
+            onUpdateStatus={updateStatus}
+          />
         )}
         ListEmptyComponent={
           <EmptyItem description={"No task yet, create one!"} />
         }
         keyExtractor={(task) => task.id}
       />
-      <ItemInput addItem={addTask} />
+      <ItemInput
+        description={selectedTaskDescription}
+        addItem={addOrUpdateTask}
+        ref={inputRef}
+      />
     </View>
   );
 };

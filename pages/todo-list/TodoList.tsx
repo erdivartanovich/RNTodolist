@@ -10,21 +10,11 @@ import TodoItem from "./TodoListItem";
 type Props = NativeStackScreenProps<RootStackParamList, "TodoList">;
 
 const AppTodoList = ({ navigation }: Props) => {
-  const {
-    getTodoList,
-    addTodo,
-    saveTodo,
-    selectTodo,
-    todoList,
-    selectedTodo,
-    status,
-  } = useTodo();
-
-  useEffect(() => {}, [selectedTodo]);
+  const { getTodoList, addTodo, selectTodo, todoList, selectedTodo, status } =
+    useTodo();
 
   useEffect(() => {
-    console.log("todo now", selectedTodo);
-    if (selectedTodo) {
+    if (!!selectedTodo) {
       navigation.navigate("TodoDetail", { title: "Manage Todo" });
     } else {
       getTodoList();

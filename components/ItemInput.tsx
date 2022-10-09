@@ -1,46 +1,51 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
+  Platform,
   StyleSheet,
-  View,
   TextInput,
   TouchableOpacity,
-  Platform,
+  View,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = {
   addItem: (description: string) => void;
+  description?: string;
 };
 
-const ItemInput = (props: Props) => {
-  const [todo, setTodo] = useState<string | null>();
+const ItemInput = React.forwardRef<TextInput, Props>(
+  ({ description, addItem }: Props, ref) => {
+    const [text, setText] = useState<string | undefined>();
 
-  const handleAddTodo = (description: string) => {
-    props.addItem(description);
-    setTodo(null);
-  };
+    const handleAddTodo = (description: string) => {
+      addItem(description);
+      setText(undefined);
+    };
 
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <TextInput
-        style={styles.inputField}
-        value={todo!}
-        onChangeText={(text) => setTodo(text)}
-        placeholder={"Add new todo"}
-        placeholderTextColor={"#916B4A"}
-      />
-      <TouchableOpacity onPress={() => handleAddTodo(todo!)}>
-        <View style={styles.button}>
-          <MaterialIcons name="keyboard-arrow-up" size={24} color="black" />
-        </View>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
-  );
-};
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+        <TextInput
+          ref={ref}
+          style={styles.inputField}
+          value={text!}
+          defaultValue={description!}
+          onChangeText={(text) => setText(text)}
+          placeholder={"Add new todo"}
+          placeholderTextColor={"#916B4A"}
+        />
+        <TouchableOpacity onPress={() => handleAddTodo(text!)}>
+          <View style={styles.button}>
+            <MaterialIcons name="keyboard-arrow-up" size={24} color="black" />
+          </View>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
