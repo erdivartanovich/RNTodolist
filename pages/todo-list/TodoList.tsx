@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import EmptyItem from "../../components/EmptyItem";
 import ItemInput from "../../components/ItemInput";
@@ -21,6 +21,8 @@ const AppTodoList = ({ navigation }: Props) => {
     status,
   } = useTodo();
 
+  const [deleted, setDeleted] = useState<string>();
+
   useEffect(() => {
     if (!!selectedTodo) {
       navigation.navigate("TodoDetail", { title: "Manage Todo" });
@@ -28,6 +30,11 @@ const AppTodoList = ({ navigation }: Props) => {
       getTodoList();
     }
   }, [selectedTodo]);
+
+  useEffect(() => {
+    deleted && deleteTodo(deleted);
+    getTodoList();
+  }, [deleted]);
 
   console.log("status now", status);
   console.log("todoList now", todoList);
@@ -44,8 +51,7 @@ const AppTodoList = ({ navigation }: Props) => {
               selectTodo(todo);
             },
             onDelete: () => {
-              deleteTodo(todo.id);
-              selectTodo(null);
+              setDeleted(todo.id);
             },
           })
         }
