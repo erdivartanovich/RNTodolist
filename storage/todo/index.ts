@@ -1,12 +1,24 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Todo, TodoList } from "../../store/todo/Todo";
+import { Todo } from "../../store/todo/Todo";
+
+const sortByDescrition = (A: Todo, B: Todo) => {
+  const da = A.description.toUpperCase();
+  const db = B.description.toUpperCase();
+  if (da < db) {
+    return -1;
+  }
+  if (da > db) {
+    return 1;
+  }
+  return 0;
+};
 
 export const getTodoList = async () => {
   try {
     const allTodos = await AsyncStorage.getAllKeys();
     const getAllTodos = allTodos.map((id: string) => AsyncStorage.getItem(id));
     const list = await Promise.all(getAllTodos);
-    return list.map((item) => JSON.parse(item!)) as TodoList;
+    return list.map((item) => JSON.parse(item!) as Todo).sort(sortByDescrition);
   } catch (e) {
     throw e;
   }
