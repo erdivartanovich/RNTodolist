@@ -3,11 +3,11 @@ import { nanoid } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import EmptyItem from "../../components/EmptyItem";
+import ItemInput from "../../components/ItemInput";
+import AppTask from "../../components/Task";
 import { RootStackParamList } from "../../Navigation";
 import { useTodo } from "../../store/todo/hooks";
 import { Task } from "../../store/todo/Todo";
-import TaskItem from "./TaskItem";
-import ItemInput from "../../components/ItemInput";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TodoDetail">;
 
@@ -16,6 +16,7 @@ const TodoDetail = ({ navigation }: Props) => {
   const { id: todoId, description, tasks } = selectedTodo!;
 
   const [taskList, setTaskList] = useState(tasks);
+
   const addTask = (description: string) => {
     const newTask: Task = {
       task: description,
@@ -25,10 +26,15 @@ const TodoDetail = ({ navigation }: Props) => {
     setTaskList([...taskList, newTask]);
   };
 
+  const updateTask = (index: number, task: Task) => {
+    const newTaskList = [...taskList];
+    newTaskList[index] = task;
+    setTaskList(newTaskList);
+  };
+
   useEffect(() => {
     const unsubscribe = navigation.addListener("beforeRemove", () => {
       const todo = JSON.parse(JSON.stringify(selectedTodo!));
-      console.log("---taskList", taskList);
       todo.tasks = taskList;
       saveTodo(todo);
       selectTodo(null);
@@ -41,12 +47,9 @@ const TodoDetail = ({ navigation }: Props) => {
       <Text style={styles.heading}>{description}</Text>
       <FlatList
         data={taskList}
-        renderItem={({ index, item: task }) =>
-          TaskItem({
-            index,
-            task,
-          })
-        }
+        renderItem={({ item: task, index }) => (
+          <AppTask index={index} task={task} onUpdateTask={updateTask} />
+        )}
         ListEmptyComponent={
           <EmptyItem description={"No task yet, create one!"} />
         }

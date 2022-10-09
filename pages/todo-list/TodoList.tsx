@@ -20,14 +20,14 @@ const AppTodoList = ({ navigation }: Props) => {
     status,
   } = useTodo();
 
-  useEffect(() => {
-    getTodoList();
-  }, [selectedTodo]);
+  useEffect(() => {}, [selectedTodo]);
 
   useEffect(() => {
     console.log("todo now", selectedTodo);
     if (selectedTodo) {
       navigation.navigate("TodoDetail", { title: "Manage Todo" });
+    } else {
+      getTodoList();
     }
   }, [selectedTodo]);
 
