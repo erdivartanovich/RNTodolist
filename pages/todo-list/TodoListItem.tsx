@@ -4,14 +4,16 @@ import { Todo as TodoInterface } from "../../store/todo/Todo";
 const TodoItem = (params: {
   index: number;
   todo: TodoInterface;
-  onPress: () => void;
+  onSelect: () => void;
+  onDelete: () => void;
 }) => {
-  const { index, todo, onPress } = params;
+  const { index, todo, onSelect, onDelete } = params;
   return (
     <Todo
       description={todo?.description}
       index={index! + 1}
-      onPress={onPress}
+      onSelect={onSelect}
+      onDelete={onDelete}
     />
   );
 };

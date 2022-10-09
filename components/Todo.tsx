@@ -4,19 +4,20 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 interface Props {
   index: number;
   description: string;
-  onPress?: () => void;
+  onSelect?: () => void;
+  onDelete?: () => void;
 }
 
-const Todo = ({ index, description, onPress }: Props) => {
+const Todo = ({ index, description, onSelect, onDelete }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.indexContainer}>
         <Text style={styles.index}>{index}</Text>
       </View>
-      <TouchableOpacity onPress={onPress} style={styles.descriptionContainer}>
+      <TouchableOpacity onPress={onSelect} style={styles.descriptionContainer}>
         <Text style={styles.description}>{description}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+      <TouchableOpacity onPress={onDelete} style={styles.buttonContainer}>
         <MaterialIcons name="delete" size={24} color="black" />
       </TouchableOpacity>
     </View>

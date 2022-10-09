@@ -11,8 +11,15 @@ import TodoItem from "./TodoListItem";
 type Props = NativeStackScreenProps<RootStackParamList, "TodoList">;
 
 const AppTodoList = ({ navigation }: Props) => {
-  const { getTodoList, addTodo, selectTodo, todoList, selectedTodo, status } =
-    useTodo();
+  const {
+    getTodoList,
+    addTodo,
+    selectTodo,
+    deleteTodo,
+    todoList,
+    selectedTodo,
+    status,
+  } = useTodo();
 
   useEffect(() => {
     if (!!selectedTodo) {
@@ -33,8 +40,12 @@ const AppTodoList = ({ navigation }: Props) => {
           TodoItem({
             index,
             todo,
-            onPress: () => {
+            onSelect: () => {
               selectTodo(todo);
+            },
+            onDelete: () => {
+              deleteTodo(todo.id);
+              selectTodo(null);
             },
           })
         }
