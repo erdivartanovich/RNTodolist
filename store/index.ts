@@ -6,15 +6,13 @@ const configureAppStore = (
 ): EnhancedStore<RootState, Actions> => {
   const devMiddlewares: Middleware[] = [];
 
-  const store = configureStore({
+  return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(devMiddlewares),
     preloadedState,
     enhancers: [],
   });
-
-  return store;
 };
 
 export const store = configureAppStore();

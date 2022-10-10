@@ -1,9 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./pages/home/Home";
 import TodoDetail from "./pages/todo-detail/TodoDetail";
 import TodoList from "./pages/todo-list/TodoList";
 
 export type RootStackParamList = {
+  Home: undefined;
   TodoList: undefined;
   TodoDetail: {
     title: string;
@@ -14,7 +16,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const Navigation = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="TodoList">
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="TodoList"
         component={TodoList}

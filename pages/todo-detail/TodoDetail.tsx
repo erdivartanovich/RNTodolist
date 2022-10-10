@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { nanoid } from "@reduxjs/toolkit";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   Keyboard,
@@ -65,8 +65,6 @@ const TodoDetail = ({ navigation }: Props) => {
       const description = taskList[selectedIndex].task;
       setSelectedTaskDescription(description);
       inputRef.current?.focus();
-    } else {
-      setSelectedTaskDescription("");
     }
   }, [selectedIndex]);
 
