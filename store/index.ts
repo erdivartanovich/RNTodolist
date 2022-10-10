@@ -1,8 +1,8 @@
 import { configureStore, EnhancedStore, Middleware } from "@reduxjs/toolkit";
 import rootReducer, { Actions, RootState } from "./rootReducer";
 
-const configureAppStore = (
-  preloadedState?: RootState
+export const configureAppStore = (
+  preloadedState?: RootState | {}
 ): EnhancedStore<RootState, Actions> => {
   const devMiddlewares: Middleware[] = [];
 
@@ -15,4 +15,5 @@ const configureAppStore = (
   });
 };
 
+export type AppStore = ReturnType<typeof configureAppStore>;
 export const store = configureAppStore();

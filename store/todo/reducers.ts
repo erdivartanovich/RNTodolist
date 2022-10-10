@@ -34,5 +34,5 @@ const todoReducer = createSlice({
     );
   },
 });
-
+export const { ADD_TODO, SELECT_TODO } = todoReducer.actions;
 export default todoReducer.reducer;
