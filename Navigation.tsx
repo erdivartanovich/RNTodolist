@@ -23,7 +23,16 @@ export const Navigation = () => (
       <Stack.Screen
         name="TodoDetail"
         component={TodoDetail}
-        options={({ route }) => ({ title: route.params.title })}
+        options={({ route }) => ({
+          title: route.params.title,
+          headerStyle: {
+            backgroundColor: "#DA6600",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        })}
       />
     </Stack.Navigator>
   </NavigationContainer>

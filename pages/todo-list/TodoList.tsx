@@ -18,14 +18,13 @@ const AppTodoList = ({ navigation }: Props) => {
     deleteTodo,
     todoList,
     selectedTodo,
-    status,
   } = useTodo();
 
   const [deleted, setDeleted] = useState<string>();
 
   useEffect(() => {
     if (!!selectedTodo) {
-      navigation.navigate("TodoDetail", { title: "Manage Todo" });
+      navigation.navigate("TodoDetail", { title: "Manage Todo Tasks" });
     } else {
       getTodoList();
     }
@@ -36,8 +35,6 @@ const AppTodoList = ({ navigation }: Props) => {
     getTodoList();
   }, [deleted]);
 
-  console.log("status now", status);
-  console.log("todoList now", todoList);
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>TODO LIST</Text>
