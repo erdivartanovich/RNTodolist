@@ -38,7 +38,7 @@ describe("TodoList page test", () => {
   const todoInitialState: TodoState = {
     error: false,
     todoList: [],
-    selectedTodo: firstTodo,
+    selectedTodo: undefined,
     status: "success",
   };
 
