@@ -40,11 +40,11 @@ const TodoDetail = ({ navigation }: Props) => {
   };
 
   const updateTask = (index: number, description: string) => {
-    const newTaskList = [...taskList];
-    newTaskList[index] = {
-      ...newTaskList[index],
-      task: description,
-    };
+    if (!description) return;
+    const newTaskList = taskList.map((t, i) => {
+      t.task = i === index ? description : t.task;
+      return t;
+    });
     setTaskList(newTaskList);
   };
 
@@ -61,23 +61,24 @@ const TodoDetail = ({ navigation }: Props) => {
   };
 
   useEffect(() => {
-    const description =
-      selectedIndex >= 0 ? taskList[selectedIndex].task : undefined;
-    setSelectedTaskDescription(description);
+    if (selectedIndex >= 0) {
+      const description = taskList[selectedIndex].task;
+      setSelectedTaskDescription(description);
+      inputRef.current?.focus();
+    } else {
+      setSelectedTaskDescription("");
+    }
   }, [selectedIndex]);
 
-  const addOrUpdateTask = useCallback(
-    (description: string) => {
-      if (selectedIndex < 0) {
-        addTask(description);
-      } else {
-        updateTask(selectedIndex, description);
-      }
-      setSelectedIndex(-1);
-      Keyboard.dismiss();
-    },
-    [selectedIndex]
-  );
+  const addOrUpdateTask = (description: string) => {
+    if (selectedIndex < 0) {
+      addTask(description);
+    } else {
+      updateTask(selectedIndex, description);
+    }
+    setSelectedIndex(-1);
+    Keyboard.dismiss();
+  };
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("beforeRemove", () => {
@@ -98,10 +99,7 @@ const TodoDetail = ({ navigation }: Props) => {
           <AppTask
             index={index}
             task={task}
-            onSelect={(index) => {
-              setSelectedIndex(index);
-              inputRef.current?.focus();
-            }}
+            onSelect={setSelectedIndex}
             onUpdateStatus={updateStatus}
             onDelete={() => deleteTask(index)}
           />

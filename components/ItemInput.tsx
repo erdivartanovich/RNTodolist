@@ -16,11 +16,11 @@ type Props = {
 
 const ItemInput = React.forwardRef<TextInput, Props>(
   ({ description, addItem }: Props, ref) => {
-    const [text, setText] = useState<string | undefined>();
+    const [text, setText] = useState<string | undefined>(description);
 
-    const handleAddTodo = (description: string) => {
-      addItem(description);
-      setText(undefined);
+    const handleAddTodo = (text: string) => {
+      addItem(text);
+      setText("");
     };
 
     return (
@@ -31,9 +31,9 @@ const ItemInput = React.forwardRef<TextInput, Props>(
         <TextInput
           ref={ref}
           style={styles.inputField}
-          value={text!}
-          defaultValue={description!}
-          onChangeText={(text) => setText(text)}
+          defaultValue={description}
+          value={text}
+          onChangeText={setText}
           placeholder={"Add new todo"}
           placeholderTextColor={"#916B4A"}
         />
