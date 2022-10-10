@@ -29,7 +29,7 @@ const TodoDetail = ({ navigation }: Props) => {
       id: nanoid(),
       done: false,
     };
-    setTaskList([...taskList, newTask]);
+    setTaskList((list) => [...list, newTask]);
   };
 
   const updateTask = (index: number, description: string) => {
