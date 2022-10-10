@@ -1,7 +1,14 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { nanoid } from "@reduxjs/toolkit";
 import React, { useCallback, useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  FlatList,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import EmptyItem from "../../components/EmptyItem";
 import ItemInput from "../../components/ItemInput";
 import Separator from "../../components/Separator";
@@ -54,9 +61,9 @@ const TodoDetail = ({ navigation }: Props) => {
   };
 
   useEffect(() => {
-    setSelectedTaskDescription(
-      selectedIndex > 0 ? taskList[selectedIndex].task : undefined
-    );
+    const description =
+      selectedIndex >= 0 ? taskList[selectedIndex].task : undefined;
+    setSelectedTaskDescription(description);
   }, [selectedIndex]);
 
   const addOrUpdateTask = useCallback(
@@ -67,6 +74,7 @@ const TodoDetail = ({ navigation }: Props) => {
         updateTask(selectedIndex, description);
       }
       setSelectedIndex(-1);
+      Keyboard.dismiss();
     },
     [selectedIndex]
   );
@@ -103,6 +111,7 @@ const TodoDetail = ({ navigation }: Props) => {
           <EmptyItem description={"No task yet, create one!"} />
         }
         keyExtractor={(task) => task.id}
+        style={styles.list}
       />
       <ItemInput
         description={selectedTaskDescription}
@@ -115,8 +124,11 @@ const TodoDetail = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#FF7700",
+    flex: 1,
+  },
+  list: {
+    maxHeight: "78%",
   },
   heading: {
     color: "#fff",
